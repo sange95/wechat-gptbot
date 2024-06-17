@@ -1,0 +1,17 @@
+{
+    "gpt": {
+        "text_config": {
+            "proxy_url": "",
+            "auth_token": "aaaa",
+            "trigger_prefix": "小王"
+        },
+        "image_config": {
+            "proxy_url": "",
+            "auth_token": "aaaa",
+            "trigger_prefix": "狗子"
+        }
+    },
+    "context_status": true,
+    "base_model": "baidu",
+    "keepalive_robot": "跳跳是只cat"
+}

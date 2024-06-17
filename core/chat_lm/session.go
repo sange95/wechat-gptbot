@@ -1,4 +1,4 @@
-package gpt
+package chat_lm
 
 import (
 	"context"
@@ -15,7 +15,7 @@ import (
 * @Date:   2023/11/11 18:05
 * @Package: 支持会话上下文管理 暂时只保留最近3次对话信息
  */
-const MaxSession = 6
+const MaxSession = 10
 
 type Session interface {
 	Chat(ctx context.Context, content string) string       // 对话

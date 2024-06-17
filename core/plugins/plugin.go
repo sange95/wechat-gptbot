@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 	jsoniter "github.com/json-iterator/go"
+	"strings"
 	"sync"
+	"wechat-gptbot/consts"
 )
 
 /*
@@ -18,7 +20,7 @@ import (
 
 const (
 	PluginTypeUnknown = iota
-	PluginTypeGpt     // gpt 插件 通过gpt的回答进行插件选择并执行插件
+	PluginTypeGpt     // chat_lm 插件 通过gpt的回答进行插件选择并执行插件
 	PluginTypeSystem  // 系统插件 定期执行的插件
 )
 
@@ -51,10 +53,27 @@ func init() {
 
 func (m *PluginManger) DoPlugin(msg string) (resetMsg string, ok bool) {
 	var pp pluginPrompt
-	err := jsoniter.UnmarshalFromString(msg, &pp)
-	if err != nil {
-		return msg, false
+	fmt.Println(msg)
+	if strings.Contains(msg, consts.NewsPluginName) {
+		pp.Name = consts.NewsPluginName
+		pp.Args = []interface{}{"全国"}
+	} else if strings.Contains(msg, consts.WeatherPluginName) {
+		pp.Args = []interface{}{"北京"}
+		pp.Name = consts.WeatherPluginName
+		arr := strings.Split(msg, `["`)
+		if len(arr) > 1 {
+			arr = strings.Split(arr[1], `"]`)
+			if len(arr) > 0 {
+				pp.Args = []interface{}{arr[0]}
+			}
+		}
 	}
+	fmt.Println(pp)
+	//err := jsoniter.UnmarshalFromString(msg, &pp)
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//	return msg, false
+	//}
 	m.Range(func(key, value any) bool {
 		if key.(string) == pp.Name {
 			plugin := value.(PluginSvr)

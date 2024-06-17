@@ -34,7 +34,7 @@ func NewMessageMatchDispatcher() *MessageMatchDispatcher {
 		return needReply && !isImage
 	}, self.text)
 
-	// 注册图片函数
+	//注册图片函数
 	dispatcher.RegisterHandler(func(message *openwechat.Message) bool {
 		needReply, isImage := checkMessageType(message)
 		return needReply && isImage
@@ -158,7 +158,7 @@ func checkMessageType(msg *openwechat.Message) (needReply bool, isImage bool) {
 func checkCreateImage(msg *openwechat.Message) bool {
 	msg.Content = strings.TrimPrefix(msg.Content, "\u2005")
 	if strings.HasPrefix(msg.Content, config.C.Gpt.ImageConfig.TriggerPrefix) {
-		return true
+		return false
 	}
 	return false
 }

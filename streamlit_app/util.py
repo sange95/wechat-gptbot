@@ -31,7 +31,7 @@ def reset_models(text_model):
 
 
 def text_models():
-    return ["gpt-3.5-turbo", "gpt-4", "gpt-4-0125-preview", "gpt-4-turbo", "gpt-4o"]
+    return ["gpt-3.5-turbo", "gpt-4", "gpt-4-0125-preview", "gpt-4-turbo", "gpt-4o", "baidu"]
 
 
 def drawing_models():

@@ -7,10 +7,9 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"wechat-gptbot/consts"
 	"wechat-gptbot/core/plugins"
 )
-
-const NewsPluginName = "NewsPlugin"
 
 type plugin struct {
 	url string
@@ -37,11 +36,11 @@ func (p plugin) Do(i ...interface{}) string {
 }
 
 func (p plugin) Name() string {
-	return NewsPluginName
+	return consts.NewsPluginName
 }
 
 func (p plugin) Scenes() string {
-	return "每日热点新闻"
+	return "每日热点新闻、热点新闻、新闻"
 }
 
 func (p plugin) IsUseful() bool {

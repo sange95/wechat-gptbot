@@ -6,10 +6,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"io"
 	"net/http"
+	"wechat-gptbot/consts"
 	"wechat-gptbot/core/plugins"
 )
-
-const WeatherPluginName = "WeatherPlugin"
 
 /*
 * @Author: zouyx
@@ -51,11 +50,11 @@ func (s Plugin) IsUseful() bool {
 }
 
 func (s Plugin) Name() string {
-	return WeatherPluginName
+	return consts.WeatherPluginName
 }
 
 func (s Plugin) Scenes() string {
-	return "查询城市天气"
+	return "查询城市天气、天气预报、汇报城市天气、天气"
 }
 
 func (s Plugin) Args() []interface{} {

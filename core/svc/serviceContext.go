@@ -1,7 +1,8 @@
 package svc
 
 import (
-	"wechat-gptbot/core/gpt"
+	"wechat-gptbot/config"
+	"wechat-gptbot/core/chat_lm"
 )
 
 /*
@@ -12,11 +13,15 @@ import (
  */
 
 type ServiceContext struct {
-	Session gpt.Session
+	Session chat_lm.Session
 }
 
 func NewServiceContext() *ServiceContext {
+	if config.C.BaseModel == "baidu" {
+		return &ServiceContext{Session: chat_lm.NewBaiduSession()}
+	}
+
 	return &ServiceContext{
-		Session: gpt.NewSession(),
+		Session: chat_lm.NewSession(),
 	}
 }

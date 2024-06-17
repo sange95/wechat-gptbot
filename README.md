@@ -147,7 +147,7 @@ func (p plugin) Args() []interface{} {
     }
   },
   "context_status": true,
-  "base_model": "gpt-3.5-turbo"
+  "base_model": "chat_lm-3.5-turbo"
 }
 ```
 
