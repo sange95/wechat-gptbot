@@ -32,8 +32,6 @@ func initBaiduPrompt() qianfan.ChatCompletionMessage {
 }
 
 func NewBaiduSession() Session {
-	//ALTAKwBC1h1QUgP40pE5dpPfK5
-	//2e6083b39b0f45a383bd74ff6bb9ab34
 	qianfan.GetConfig().AccessKey = ""
 	qianfan.GetConfig().SecretKey = ""
 
