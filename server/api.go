@@ -46,9 +46,9 @@ func WithPort(p int) Option {
 	}
 }
 
-func (server ApiServer) Run() {
+func (botApi ApiServer) Run() {
 	// 关闭debug模式
 	gin.SetMode(gin.ReleaseMode)
-	router := routes.InitRoute(server.bot)
-	http.ListenAndServe(fmt.Sprintf(":%d", server.port), router)
+	router := routes.InitRoute(botApi.bot)
+	http.ListenAndServe(fmt.Sprintf(":%d", botApi.port), router)
 }

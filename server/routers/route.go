@@ -16,5 +16,11 @@ func InitRoute(bot *openwechat.Bot) *gin.Engine {
 		r.GET("/current-model", controller.CurrentModel)
 		r.POST("/reset-model", controller.ResetModel)
 	}
+
+	send := router.Group("/v1")
+	{
+		send.POST("/msg", controller.SendMsg)
+	}
+
 	return router
 }

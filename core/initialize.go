@@ -1,6 +1,7 @@
 package core
 
 import (
+	"github.com/eatmoreapple/openwechat"
 	"github.com/sirupsen/logrus"
 	"wechat-gptbot/config"
 	"wechat-gptbot/core/handler"
@@ -11,6 +12,8 @@ import (
 	"wechat-gptbot/logger"
 	"wechat-gptbot/streamlit_app"
 )
+
+var Bot *openwechat.Bot
 
 /*
 * @Author: zouyx
@@ -25,6 +28,8 @@ func Initialize() {
 		ObjectName: "wechat-gptbot",
 		WriteFile:  false,
 	})
+
+	Bot = openwechat.DefaultBot(openwechat.Desktop) // 桌面模式
 	// 初始化插件
 	plugins.Manger.Register(weather.NewPlugin(), news.NewPlugin())
 	// 初始化配置文件
