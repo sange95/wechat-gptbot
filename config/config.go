@@ -21,6 +21,8 @@ type Config struct {
 	ContextStatus  bool   `json:"context_status"`
 	BaseModel      string `json:"base_model"`
 	KeepaliveRobot string `json:"keepalive_robot"`
+	BaiduAk        string `json:"baiduAk"`
+	BaiduSk        string `json:"baiduSk"`
 }
 
 func (c *Config) GetBaseModel() string {
@@ -78,4 +80,5 @@ func InitConfig() {
 		log.Fatalf("读取配置文件失败，请检查配置文件 `prompt.conf` 的配置, 错误信息: %+v\n", err)
 	}
 	Prompt = string(prompt)
+	log.Printf("config detail:%+v", C)
 }

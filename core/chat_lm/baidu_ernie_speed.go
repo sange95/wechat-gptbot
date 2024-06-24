@@ -32,8 +32,8 @@ func initBaiduPrompt() qianfan.ChatCompletionMessage {
 }
 
 func NewBaiduSession() Session {
-	qianfan.GetConfig().AccessKey = ""
-	qianfan.GetConfig().SecretKey = ""
+	qianfan.GetConfig().AccessKey = config.C.BaiduAk
+	qianfan.GetConfig().SecretKey = config.C.BaiduSk
 
 	// 调用对话Chat，可以通过 WithModel 指定模型，例如指定ERNIE-3.5-8K，参数对应ERNIE-Bot
 	client := qianfan.NewChatCompletion(
