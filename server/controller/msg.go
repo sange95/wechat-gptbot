@@ -48,6 +48,7 @@ type MsgEntity struct {
 func SendMsg(c *gin.Context) {
 
 	param := MsgEntity{}
+	Init()
 
 	if err := c.ShouldBindJSON(&param); err != nil {
 		c.JSON(http.StatusBadRequest, NewFailureResponse(fmt.Sprintf("unmarsha param failure:%+v", err)))
