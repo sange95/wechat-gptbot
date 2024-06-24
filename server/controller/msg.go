@@ -25,7 +25,7 @@ func Init() {
 			fmt.Println("NickName:", group.NickName)
 			fmt.Println("DisplayName:", group.DisplayName)
 			fmt.Println("DisplayName:", group.RemarkName)
-			GroupsMap[group.UserName] = groups[i]
+			GroupsMap[group.NickName] = groups[i]
 		}
 
 		for i, friend := range friends {
@@ -33,7 +33,7 @@ func Init() {
 			fmt.Println("NickName:", friend.NickName)
 			fmt.Println("DisplayName:", friend.DisplayName)
 			fmt.Println("DisplayName:", friend.RemarkName)
-			FriendsMap[friend.UserName] = friends[i]
+			FriendsMap[friend.NickName] = friends[i]
 		}
 	})
 }
