@@ -2,18 +2,46 @@ package controller
 
 import (
 	"fmt"
+	"github.com/baidubce/bce-sdk-go/util/log"
 	"github.com/eatmoreapple/openwechat"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"sync"
 	"wechat-gptbot/core"
 )
 
 var FriendsMap = make(map[string]*openwechat.Friend)
 var GroupsMap = make(map[string]*openwechat.Group)
 
+var once sync.Once
+
+func Init() {
+	self, _ := core.Bot.GetCurrentUser()
+	once.Do(func() {
+		groups, _ := self.Groups(false)
+		friends, _ := self.Friends(false)
+
+		for i, group := range groups {
+			log.Info("UserName:", group.UserName)
+			log.Info("NickName:", group.NickName)
+			log.Info("DisplayName:", group.DisplayName)
+			log.Info("DisplayName:", group.RemarkName)
+			GroupsMap[group.UserName] = groups[i]
+		}
+
+		for i, friend := range friends {
+			log.Info("UserName:", friend.UserName)
+			log.Info("NickName:", friend.NickName)
+			log.Info("DisplayName:", friend.DisplayName)
+			log.Info("DisplayName:", friend.RemarkName)
+			FriendsMap[friend.UserName] = friends[i]
+		}
+	})
+}
+
 type MsgEntity struct {
 	Msg          string `json:"msg"`
-	ReceiverType string `json:"msgType"`      // 群组，个人
+	ReceiverType string `json:"receiverType"` // 群组，个人
 	ReceiverName string `json:"receiverName"` // 接受者的名字，群名或者微信名称
 }
 
@@ -32,9 +60,10 @@ func SendMsg(c *gin.Context) {
 	}
 
 	self, _ := core.Bot.GetCurrentUser()
+	fmt.Printf("self:%+v", self)
 	switch param.ReceiverType {
 	case "friend":
-		f := FindFriend(param.ReceiverName, self)
+		f := FindFriend(param.ReceiverName)
 		if f == nil {
 			c.JSON(http.StatusNotFound, NewFailureResponse(fmt.Sprintf("%s not found", param.ReceiverName)))
 			return
@@ -45,7 +74,7 @@ func SendMsg(c *gin.Context) {
 		}
 
 	case "group":
-		g := FindGroup(param.ReceiverName, self)
+		g := FindGroup(param.ReceiverName)
 		if g == nil {
 			c.JSON(http.StatusNotFound, NewFailureResponse(fmt.Sprintf("%s not found", param.ReceiverName)))
 			return
@@ -62,28 +91,10 @@ func SendMsg(c *gin.Context) {
 	return
 }
 
-func FindFriend(username string, self *openwechat.Self) *openwechat.Friend {
-	f, ok := FriendsMap[username]
-	friends, _ := self.Friends(false)
-	if !ok {
-		for i, friend := range friends {
-			if friend.UserName == username {
-				f = friends[i]
-			}
-		}
-	}
-	return f
+func FindFriend(username string) *openwechat.Friend {
+	return FriendsMap[username]
 }
 
-func FindGroup(groupName string, self *openwechat.Self) *openwechat.Group {
-	g, ok := GroupsMap[groupName]
-	groups, _ := self.Groups(false)
-	if !ok {
-		for i, group := range groups {
-			if group.NickName == groupName {
-				g = groups[i]
-			}
-		}
-	}
-	return g
+func FindGroup(groupName string) *openwechat.Group {
+	return GroupsMap[groupName]
 }
