@@ -2,7 +2,6 @@ package controller
 
 import (
 	"fmt"
-	"github.com/baidubce/bce-sdk-go/util/log"
 	"github.com/eatmoreapple/openwechat"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -22,18 +21,18 @@ func Init() {
 		friends, _ := self.Friends(false)
 
 		for i, group := range groups {
-			log.Info("UserName:", group.UserName)
-			log.Info("NickName:", group.NickName)
-			log.Info("DisplayName:", group.DisplayName)
-			log.Info("DisplayName:", group.RemarkName)
+			fmt.Println("UserName:", group.UserName)
+			fmt.Println("NickName:", group.NickName)
+			fmt.Println("DisplayName:", group.DisplayName)
+			fmt.Println("DisplayName:", group.RemarkName)
 			GroupsMap[group.UserName] = groups[i]
 		}
 
 		for i, friend := range friends {
-			log.Info("UserName:", friend.UserName)
-			log.Info("NickName:", friend.NickName)
-			log.Info("DisplayName:", friend.DisplayName)
-			log.Info("DisplayName:", friend.RemarkName)
+			fmt.Println("UserName:", friend.UserName)
+			fmt.Println("NickName:", friend.NickName)
+			fmt.Println("DisplayName:", friend.DisplayName)
+			fmt.Println("DisplayName:", friend.RemarkName)
 			FriendsMap[friend.UserName] = friends[i]
 		}
 	})
